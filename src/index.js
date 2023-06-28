@@ -3,9 +3,9 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
-const keywords = require('./keywords.js')
-const questions = require('./questions.js')
-const demoTextLoader = require('./demoTextLoader.js')
+const keywords = require('../keywords.js')
+const questions = require('../questions.js')
+const demoTextLoader = require('../demoTextLoader.js')
 
 const app = express()
 const port = process.env.PORT || 3001
