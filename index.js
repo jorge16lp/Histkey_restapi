@@ -18,8 +18,8 @@ app.use(cors())
 // };
 
 app.listen(port, () => {
-    // console.log(`API REST corriendo en http://localhost:${port}`)
-    console.log(`API REST corriendo en https://jorge16lp.github.io/Histkey_restapi`)
+    console.log(`API REST corriendo en http://localhost:${port}`)
+    // console.log(`API REST corriendo en https://jorge16lp.github.io/Histkey_restapi`)
 })
 
 app.use(express.json())
