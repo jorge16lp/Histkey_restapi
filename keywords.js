@@ -138,7 +138,7 @@ function tf_idf() {
     var finalWords = [];
 
     for (const [key, value] of map.entries()) {
-        if (value > 0.3) { // mejor valor de momento: 0.3
+        if (value > 0.7) { // mejor valor de momento para F1: 0.7
             if (!finalWords.includes(key)) { // para que no se repitan iguales o con espacios de más
                 // console.log(key, value);
                 finalWords.push(key); // añadir palabra 'importante'
