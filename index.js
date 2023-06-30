@@ -11,15 +11,10 @@ const app = express()
 const port = process.env.PORT || 3001
 
 app.use(cors())
-// cors.CorsOptions = {
-//     origin: ['http://localhost:3000', 'https://jorge16lp.github.io/Histkey_webapp']
-//     // origin: 'https://jorge16lp.github.io/Histkey_webapp' || 'http://localhost:3000'
-//     // origin: 'https://jorge16lp.github.io/Histkey_webapp'
-// };
 
 app.listen(port, () => {
-    console.log(`API REST corriendo en http://localhost:${port}`)
-    // console.log(`API REST corriendo en https://jorge16lp.github.io/Histkey_restapi`)
+    // console.log(`API REST corriendo en http://localhost:${port}`)
+    console.log(`API REST corriendo en https://histkey-restapi.onrender.com`)
 })
 
 app.use(express.json())
