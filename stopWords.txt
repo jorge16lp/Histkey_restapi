@@ -739,6 +739,7 @@ species
 speck
 speech
 spurt
+st
 stage
 stars
 state
