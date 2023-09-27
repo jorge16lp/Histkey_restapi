@@ -15,11 +15,13 @@ async function main(res, text, keywords, repetitions) {
     prevKeywords.push(...keywords)
     keysRepetitions = []
     keysRepetitions.push(...repetitions)
-    var final = new Map()
+    // var final = new Map()
+    var final = []
 
     final = generateQuestions()
     res.send({
-        questions: Array.from(final)
+        // questions: Array.from(final)
+        questions: final
     });
 }
 
@@ -29,7 +31,8 @@ async function main(res, text, keywords, repetitions) {
 
 function generateQuestions() {
     const sentences = paragraph.split('.');
-    const questions = new Map();
+    // const questions = new Map();
+    var questions = []
     var questionsForActualKey = 0;
 
     for (var word in prevKeywords) {
@@ -43,7 +46,8 @@ function generateQuestions() {
                 if (words.includes(prevKeywords[word]) && questionsForActualKey < keysRepetitions[word]) {
                     var finalSentence = initialSentence.replace(prevKeywords[word], blank)
     
-                    questions.set(finalSentence, getOptionsWithPOS(prevKeywords[word]))
+                    // questions.set(finalSentence, getOptionsWithPOS(prevKeywords[word]))
+                    questions.push([finalSentence, getOptionsWithPOS(prevKeywords[word]), prevKeywords[word]])
                     questionsForActualKey++;
                 }
             }
@@ -128,33 +132,37 @@ function getOptionsWithPOS(w) {
     var arrayOptions = [options]
     const min = 0;
     if (taggedWord[0][1] === 'NNP') {
-        while (arrayOptions.length < 4) {
-            const max = NNPlist.length - 1
-            const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
-            if (!arrayOptions.includes(NNPlist[randomNumber][0]))
-                arrayOptions.push(NNPlist[randomNumber][0])
-        }
+        if (NNPlist.length >= 3)
+            while (arrayOptions.length < 4) {
+                const max = NNPlist.length - 1
+                const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
+                if (!arrayOptions.includes(NNPlist[randomNumber][0]))
+                    arrayOptions.push(NNPlist[randomNumber][0])
+            }
     } else if (taggedWord[0][1] === 'NNPS') {
-        while (arrayOptions.length < 4) {
-            const max = NNPSlist.length - 1
-            const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
-            if (!arrayOptions.includes(NNPSlist[randomNumber][0]))
-                arrayOptions.push(NNPSlist[randomNumber][0])
-        }
+        if (NNPSlist.length >= 3)
+            while (arrayOptions.length < 4) {
+                const max = NNPSlist.length - 1
+                const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
+                if (!arrayOptions.includes(NNPSlist[randomNumber][0]))
+                    arrayOptions.push(NNPSlist[randomNumber][0])
+            }
     } else if (taggedWord[0][1] === 'NN') {
-        while (arrayOptions.length < 4) {
-            const max = NNlist.length - 1
-            const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
-            if (!arrayOptions.includes(NNlist[randomNumber][0]))
-                arrayOptions.push(NNlist[randomNumber][0])
-        }
+        if (NNlist.length >= 3)
+            while (arrayOptions.length < 4) {
+                const max = NNlist.length - 1
+                const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
+                if (!arrayOptions.includes(NNlist[randomNumber][0]))
+                    arrayOptions.push(NNlist[randomNumber][0])
+            }
     } else if (taggedWord[0][1] === 'NNS') {
-        while (arrayOptions.length < 4) {
-            const max = NNSlist.length - 1
-            const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
-            if (!arrayOptions.includes(NNSlist[randomNumber][0]))
-                arrayOptions.push(NNSlist[randomNumber][0])
-        }
+        if (NNSlist.length >= 3)
+            while (arrayOptions.length < 4) {
+                const max = NNSlist.length - 1
+                const randomNumber = Math.floor(Math.random() * (max - min + 1)) + min
+                if (!arrayOptions.includes(NNSlist[randomNumber][0]))
+                    arrayOptions.push(NNSlist[randomNumber][0])
+            }
     } else {
         console.log(taggedWord[0][0], taggedWord[0][1])
     }

@@ -6,6 +6,7 @@ const cors = require('cors')
 const keywords = require('./keywords.js')
 const questions = require('./questions.js')
 const demoTextLoader = require('./demoTextLoader.js')
+const db = require('./db/db_methods.js')
 
 const app = express()
 const port = process.env.PORT || 3001
@@ -13,8 +14,8 @@ const port = process.env.PORT || 3001
 app.use(cors())
 
 app.listen(port, () => {
-    // console.log(`API REST corriendo en http://localhost:${port}`)
-    console.log(`API REST corriendo en https://histkey-restapi.onrender.com`)
+    console.log(`API REST corriendo en http://localhost:${port}`)
+    // console.log(`API REST corriendo en https://histkey-restapi.onrender.com`)
 })
 
 app.use(express.json())
@@ -38,4 +39,24 @@ app.post('/questions/', (req, res) => {
 // obtener el texto de prueba
 app.get('/read-demo-file/', (req, res) => {
     demoTextLoader.getDemoText(res)
+})
+
+// obtener usuario por email
+app.post('/find-user-by-email/', (req, res) => {
+    db.findUserByEmail(res, req.body.email, req.body.pass)
+})
+
+// obtener profesor por email
+app.post('/find-teacher-by-email/', (req, res) => {
+    db.findTeacherByEmail(res, req.body.email, req.body.pass)
+})
+
+// obtener estudiante por email
+app.post('/find-student-by-email/', (req, res) => {
+    db.findStudentByEmail(res, req.body.email, req.body.pass)
+})
+
+// añadir usuario
+app.post('/add-user/', (req, res) => {
+    db.addUser(res, req.body.type, req.body.name, req.body.surname, req.body.email, req.body.pass)
 })
