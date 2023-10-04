@@ -10,7 +10,9 @@ module.exports = {
     findUserByEmail: findUserByEmail,
     findTeacherByEmail: findTeacherByEmail,
     findStudentByEmail: findStudentByEmail,
-    addUser: addUser
+    addUser: addUser,
+    addExam: addExam,
+    findExamByPublicId: findExamByPublicId
 };
 
 async function addUser(res, type, theName, theSurname, theEmail, pass) {
@@ -33,13 +35,45 @@ async function addUser(res, type, theName, theSurname, theEmail, pass) {
         }
         var user = await newUser.save()
         // console.log(user)
-        res.send({user: user})
+        res.send({
+            user: user
+        })
     } catch (err) {
         if (err.code === 11000)
-            res.send({user: '11000'})
-        else {    
+            res.send({
+                user: '11000'
+            })
+        else {
             console.error(err)
-            res.send({user: err})
+            res.send({
+                user: err
+            })
+        }
+    }
+}
+
+async function addExam(res, id, theQuestions) {
+    try {
+        connection()
+        var newExam = new ExamModel({
+            public_id: id,
+            questions: theQuestions
+        })
+        var exam = await newExam.save()
+        console.log(exam)
+        res.send({
+            exam: exam
+        })
+    } catch (err) {
+        if (err.code === 11000)
+            res.send({
+                exam: '11000'
+            })
+        else {
+            console.error(err)
+            res.send({
+                exam: err
+            })
         }
     }
 }
@@ -63,16 +97,22 @@ async function findUserByEmail(res, email, pass) {
         for (var t in allTeachers)
             if (allTeachers[t].email === email && allTeachers[t].password === pass) {
                 finded = true
-                res.send({user: allTeachers[t]})
+                res.send({
+                    user: allTeachers[t]
+                })
             }
         const allStudents = await StudentModel.find()
         for (var s in allStudents)
             if (allStudents[s].email === email && allStudents[s].password === pass) {
                 finded = true
-                res.send({user: allStudents[s]})
+                res.send({
+                    user: allStudents[s]
+                })
             }
         if (!finded)
-            res.send({user: null})
+            res.send({
+                user: null
+            })
     } catch (err) {
         console.error(err)
     }
@@ -86,10 +126,35 @@ async function findTeacherByEmail(res, email, pass) {
         for (var t in allTeachers)
             if (allTeachers[t].email === email && allTeachers[t].password === pass) {
                 finded = true
-                res.send({user: allTeachers[t]})
+                res.send({
+                    user: allTeachers[t]
+                })
             }
         if (!finded)
-            res.send({user: null})
+            res.send({
+                user: null
+            })
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+async function findExamByPublicId(res, pId) {
+    try {
+        connection()
+        var finded = false
+        const allExams = await ExamModel.find()
+        for (var e in allExams)
+            if (allExams[e].public_id === pId) {
+                finded = true
+                res.send({
+                    exam: allExams[e]
+                })
+            }
+        if (!finded)
+            res.send({
+                exam: null
+            })
     } catch (err) {
         console.error(err)
     }
@@ -103,10 +168,14 @@ async function findStudentByEmail(res, email, pass) {
         for (var s in allStudents)
             if (allStudents[s].email === email && allStudents[s].password === pass) {
                 finded = true
-                res.send({user: allStudents[s]})
+                res.send({
+                    user: allStudents[s]
+                })
             }
         if (!finded)
-            res.send({user: null})
+            res.send({
+                user: null
+            })
     } catch (err) {
         console.error(err)
     }

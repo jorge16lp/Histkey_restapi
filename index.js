@@ -41,10 +41,10 @@ app.get('/read-demo-file/', (req, res) => {
     demoTextLoader.getDemoText(res)
 })
 
-// obtener usuario por email
-app.post('/find-user-by-email/', (req, res) => {
-    db.findUserByEmail(res, req.body.email, req.body.pass)
-})
+// obtener usuario por email (creo que no se usa y en todo caso está mal => debería coger users (profesores y estudiantes) no solo uno)
+// app.post('/find-user-by-email/', (req, res) => {
+//     db.findUserByEmail(res, req.body.email, req.body.pass)
+// })
 
 // obtener profesor por email
 app.post('/find-teacher-by-email/', (req, res) => {
@@ -59,4 +59,14 @@ app.post('/find-student-by-email/', (req, res) => {
 // añadir usuario
 app.post('/add-user/', (req, res) => {
     db.addUser(res, req.body.type, req.body.name, req.body.surname, req.body.email, req.body.pass)
+})
+
+// añadir examen
+app.post('/add-exam/', (req, res) => {
+    db.addExam(res, req.body.public_id, req.body.questions)
+})
+
+// obtener examen por id pública
+app.post('/find-exam-by-publicId/', (req, res) => {
+    db.findExamByPublicId(res, req.body.public_id)
 })
