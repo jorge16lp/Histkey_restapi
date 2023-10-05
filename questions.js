@@ -19,6 +19,7 @@ async function main(res, text, keywords, repetitions) {
     var final = []
 
     final = generateQuestions()
+    console.log(final)
     res.send({
         // questions: Array.from(final)
         questions: final

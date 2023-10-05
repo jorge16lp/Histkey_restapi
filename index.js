@@ -14,8 +14,8 @@ const port = process.env.PORT || 3001
 app.use(cors())
 
 app.listen(port, () => {
-    console.log(`API REST corriendo en http://localhost:${port}`)
-    // console.log(`API REST corriendo en https://histkey-restapi.onrender.com`)
+    // console.log(`API REST corriendo en http://localhost:${port}`)
+    console.log(`API REST corriendo en https://histkey-restapi.onrender.com`)
 })
 
 app.use(express.json())
