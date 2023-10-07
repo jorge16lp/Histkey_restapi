@@ -12,7 +12,12 @@ var stopWords = [];
 // main(); // start execution
 
 async function main(res, text) {
-    paragraph = text;
+    // limpiar variables
+    paragraph = ""
+    finalParagraphSimple = ""
+    stopWords = []
+
+    paragraph = text
     fs.readFile(stopWordsPath, 'utf8', (error, dataStop) => {
         if (error)
             console.error('Error en la lectura del archivo de stopWords: ', stopWordsPath, error);

@@ -10,10 +10,13 @@ var keysRepetitions = []
 var blank = '__________'
 
 async function main(res, text, keywords, repetitions) {
-    paragraph = text
+    // limpiar variables
+    paragraph = ""
     prevKeywords = []
-    prevKeywords.push(...keywords)
     keysRepetitions = []
+
+    paragraph = text
+    prevKeywords.push(...keywords)
     keysRepetitions.push(...repetitions)
     // var final = new Map()
     var final = []
@@ -40,16 +43,16 @@ function generateQuestions() {
         questionsForActualKey = 0;
         if (keysRepetitions[word] > 0) {
             for (let i = 0; i < sentences.length; i++) {
-                var initialSentence = sentences[i].trim();
-                var sentence = procesado(initialSentence);
-                const words = sentence.split(' ');
+                var initialSentence = sentences[i].trim()
+                var sentence = procesado(initialSentence)
+                const words = sentence.split(' ')
     
                 if (words.includes(prevKeywords[word]) && questionsForActualKey < keysRepetitions[word]) {
                     var finalSentence = initialSentence.replace(prevKeywords[word], blank)
     
                     // questions.set(finalSentence, getOptionsWithPOS(prevKeywords[word]))
                     questions.push([finalSentence, getOptionsWithPOS(prevKeywords[word]), prevKeywords[word]])
-                    questionsForActualKey++;
+                    questionsForActualKey++
                 }
             }
         }
