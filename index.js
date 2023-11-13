@@ -15,7 +15,7 @@ app.use(cors())
 
 app.listen(port, () => {
     console.log(`API REST corriendo en http://localhost:${port}`)
-    // console.log(`API REST corriendo en https://histkey-restapi.onrender.com`)
+    console.log(`API REST corriendo en https://histkey-restapi.onrender.com`)
 })
 
 app.use(express.json())
@@ -41,32 +41,33 @@ app.get('/read-demo-file/', (req, res) => {
     demoTextLoader.getDemoText(res)
 })
 
-// obtener usuario por email (creo que no se usa y en todo caso está mal => debería coger users (profesores y estudiantes) no solo uno)
-// app.post('/find-user-by-email/', (req, res) => {
-//     db.findUserByEmail(res, req.body.email, req.body.pass)
-// })
-
 // obtener profesor por email
-app.post('/find-teacher-by-email/', (req, res) => {
-    db.findTeacherByEmail(res, req.body.email, req.body.pass)
+app.get('/teacher/', (req, res) => {
+    const email = req.query.email
+    const pass = req.query.pass
+    db.findTeacherByEmail(res, email, pass)
 })
 
 // obtener estudiante por email
-app.post('/find-student-by-email/', (req, res) => {
-    db.findStudentByEmail(res, req.body.email, req.body.pass)
+app.get('/student/', (req, res) => {
+    const email = req.query.email
+    const pass = req.query.pass
+    db.findStudentByEmail(res, email, pass)
 })
 
 // añadir usuario
-app.post('/add-user/', (req, res) => {
+app.post('/user/', (req, res) => {
     db.addUser(res, req.body.type, req.body.name, req.body.surname, req.body.email, req.body.pass)
 })
 
 // añadir examen
-app.post('/add-exam/', (req, res) => {
+app.post('/exam/', (req, res) => {
     db.addExam(res, req.body.public_id, req.body.questions)
 })
 
 // obtener examen por id pública
-app.post('/find-exam-by-publicId/', (req, res) => {
-    db.findExamByPublicId(res, req.body.public_id)
+app.get('/exam/:id', (req, res) => {
+    const public_id = req.params.id
+    // console.log(public_id)
+    db.findExamByPublicId(res, public_id)
 })
