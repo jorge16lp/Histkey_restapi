@@ -15,7 +15,7 @@ module.exports = {
     findExamByPublicId: findExamByPublicId
 };
 
-async function addUser(res, type, theName, theSurname, theEmail, pass) {
+async function addUser(type, theName, theSurname, theEmail, pass) {
     try {
         connection()
         if (type === 'teacher') {
@@ -35,24 +35,18 @@ async function addUser(res, type, theName, theSurname, theEmail, pass) {
         }
         var user = await newUser.save()
         // console.log(user)
-        res.send({
-            user: user
-        })
+        return user
     } catch (err) {
         if (err.code === 11000)
-            res.send({
-                user: '11000'
-            })
+            return '11000'
         else {
             console.error(err)
-            res.send({
-                user: err
-            })
+            return err
         }
     }
 }
 
-async function addExam(res, id, theQuestions) {
+async function addExam(id, theQuestions) {
     try {
         connection()
         var newExam = new ExamModel({
@@ -61,35 +55,29 @@ async function addExam(res, id, theQuestions) {
         })
         var exam = await newExam.save()
         console.log(exam)
-        res.send({
-            exam: exam
-        })
+        return exam
     } catch (err) {
         if (err.code === 11000)
-            res.send({
-                exam: '11000'
-            })
+            return '11000'
         else {
             console.error(err)
-            res.send({
-                exam: err
-            })
+            return err
         }
     }
 }
 
-async function getAllTeachers(res) {
+async function getAllTeachers() {
     try {
         connection()
         const allTeachers = await TeacherModel.find()
         // console.log(allTeachers)
-        res.send(allTeachers)
+        return allTeachers
     } catch (err) {
         console.error(err)
     }
 }
 
-async function findUserByEmail(res, email, pass) {
+async function findUserByEmail(email, pass) {
     try {
         connection()
         var finded = false
@@ -97,28 +85,22 @@ async function findUserByEmail(res, email, pass) {
         for (var t in allTeachers)
             if (allTeachers[t].email === email && allTeachers[t].password === pass) {
                 finded = true
-                res.send({
-                    user: allTeachers[t]
-                })
+                return allTeachers[t]
             }
         const allStudents = await StudentModel.find()
         for (var s in allStudents)
             if (allStudents[s].email === email && allStudents[s].password === pass) {
                 finded = true
-                res.send({
-                    user: allStudents[s]
-                })
+                return allStudents[s]
             }
         if (!finded)
-            res.send({
-                user: null
-            })
+            return null
     } catch (err) {
         console.error(err)
     }
 }
 
-async function findTeacherByEmail(res, email, pass) {
+async function findTeacherByEmail(email, pass) {
     try {
         connection()
         var finded = false
@@ -126,20 +108,16 @@ async function findTeacherByEmail(res, email, pass) {
         for (var t in allTeachers)
             if (allTeachers[t].email === email && allTeachers[t].password === pass) {
                 finded = true
-                res.send({
-                    user: allTeachers[t]
-                })
+                return allTeachers[t]
             }
         if (!finded)
-            res.send({
-                user: null
-            })
+            return null
     } catch (err) {
         console.error(err)
     }
 }
 
-async function findExamByPublicId(res, pId) {
+async function findExamByPublicId(pId) {
     try {
         connection()
         var finded = false
@@ -147,20 +125,16 @@ async function findExamByPublicId(res, pId) {
         for (var e in allExams)
             if (allExams[e].public_id === pId) {
                 finded = true
-                res.send({
-                    exam: allExams[e]
-                })
+                return allExams[e]
             }
         if (!finded)
-            res.send({
-                exam: null
-            })
+            return null
     } catch (err) {
         console.error(err)
     }
 }
 
-async function findStudentByEmail(res, email, pass) {
+async function findStudentByEmail(email, pass) {
     try {
         connection()
         var finded = false
@@ -168,36 +142,32 @@ async function findStudentByEmail(res, email, pass) {
         for (var s in allStudents)
             if (allStudents[s].email === email && allStudents[s].password === pass) {
                 finded = true
-                res.send({
-                    user: allStudents[s]
-                })
+                return allStudents[s]
             }
         if (!finded)
-            res.send({
-                user: null
-            })
+            return null
     } catch (err) {
         console.error(err)
     }
 }
 
-async function getAllStudents(res) {
+async function getAllStudents() {
     try {
         connection()
         const allStudents = await StudentModel.find()
         // console.log(allStudents)
-        res.send(allStudents)
+        return allStudents
     } catch (err) {
         console.error(err)
     }
 }
 
-async function getAllExams(res) {
+async function getAllExams() {
     try {
         connection()
         const allExams = await ExamModel.find()
         // console.log(allExams)
-        res.send(allExams)
+        return allExams
     } catch (err) {
         console.error(err)
     }

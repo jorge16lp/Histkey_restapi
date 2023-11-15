@@ -1,39 +1,40 @@
+const util = require('util')
 const fs = require('fs');
 
 module.exports = {
     getKeyWords: main
 };
 
-let stopWordsPath = './stopWords.txt';
-var paragraph = "";
-var finalParagraphSimple = "";
-var stopWords = [];
+const readFileAsync = util.promisify(fs.readFile)
+
+let stopWordsPath = './stopWords.txt'
+var paragraph = ""
+var finalParagraphSimple = ""
+var stopWords = []
 
 // main(); // start execution
 
-async function main(res, text) {
-    // limpiar variables
-    paragraph = ""
-    finalParagraphSimple = ""
-    stopWords = []
+async function main(text) {
+    try {
+        // Limpiar variables
+        paragraph = text
+        finalParagraphSimple = ""
+        stopWords = []
 
-    paragraph = text
-    fs.readFile(stopWordsPath, 'utf8', (error, dataStop) => {
-        if (error)
-            console.error('Error en la lectura del archivo de stopWords: ', stopWordsPath, error);
-        else {
-            stopWords = dataStop.split('\n');
-            //__________ Procesado ________
-            procesado();
-            //____________ POS ____________
-            POS();
-            //___________ TF-IDF __________
-            var final = tf_idf();
-            res.send({
-                keywords: final
-            });
-        }
-    });
+        // Leer el archivo de stopWords
+        const dataStop = await readFileAsync(stopWordsPath, 'utf8')
+        stopWords = dataStop.split('\n')
+
+        // Procesar texto, aplicar POS y TF-IDF
+        procesado()
+        POS()
+        var final = tf_idf()
+
+        return final
+    } catch (error) {
+        console.error('Error:', error);
+        throw error;
+    }
 }
 
 

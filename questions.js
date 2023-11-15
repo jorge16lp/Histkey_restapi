@@ -9,7 +9,7 @@ var prevKeywords = []
 var keysRepetitions = []
 var blank = '__________'
 
-async function main(res, text, keywords, repetitions) {
+async function main(text, keywords, repetitions) {
     // limpiar variables
     paragraph = ""
     prevKeywords = []
@@ -18,15 +18,11 @@ async function main(res, text, keywords, repetitions) {
     paragraph = text
     prevKeywords.push(...keywords)
     keysRepetitions.push(...repetitions)
-    // var final = new Map()
     var final = []
 
     final = generateQuestions()
     console.log(final)
-    res.send({
-        // questions: Array.from(final)
-        questions: final
-    });
+    return final
 }
 
 

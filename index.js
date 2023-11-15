@@ -26,48 +26,53 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json())
 
+// KEYWORDS
 // obtener las keywords a partir del texto
 app.post('/keywords/', (req, res) => {
-    keywords.getKeyWords(res, req.body.theText)
+    keywords.getKeyWords(req.body.theText).then(obj => res.send({keywords: obj}))
 })
 
+// QUESTIONS
 // obtener las preguntas a partir del texto, las keywords y sus repeticiones
 app.post('/questions/', (req, res) => {
-    questions.getQuestions(res, req.body.theText, req.body.keywords, req.body.repetitions)
+    questions.getQuestions(req.body.theText, req.body.keywords, req.body.repetitions).then(obj => res.send({questions: obj}))
 })
 
+// TEXT
 // obtener el texto de prueba
 app.get('/read-demo-file/', (req, res) => {
-    demoTextLoader.getDemoText(res)
+    demoTextLoader.getDemoText().then(obj => res.send({demoText: obj}))
 })
 
+// USERS
 // obtener profesor por email
 app.get('/teacher/', (req, res) => {
     const email = req.query.email
     const pass = req.query.pass
-    db.findTeacherByEmail(res, email, pass)
+    db.findTeacherByEmail(email, pass).then(obj => res.send({user: obj}))
 })
 
 // obtener estudiante por email
 app.get('/student/', (req, res) => {
     const email = req.query.email
     const pass = req.query.pass
-    db.findStudentByEmail(res, email, pass)
+    db.findStudentByEmail(email, pass).then(obj => res.send({user: obj}))
 })
 
 // añadir usuario
 app.post('/user/', (req, res) => {
-    db.addUser(res, req.body.type, req.body.name, req.body.surname, req.body.email, req.body.pass)
+    db.addUser(req.body.type, req.body.name, req.body.surname, req.body.email, req.body.pass).then(obj => res.send({user: obj}))
 })
 
+// EXAMS
 // añadir examen
 app.post('/exam/', (req, res) => {
-    db.addExam(res, req.body.public_id, req.body.questions)
+    db.addExam(req.body.public_id, req.body.questions).then(obj => res.send({exam: obj}))
 })
 
 // obtener examen por id pública
 app.get('/exam/:id', (req, res) => {
     const public_id = req.params.id
     // console.log(public_id)
-    db.findExamByPublicId(res, public_id)
+    db.findExamByPublicId(public_id).then(obj => res.send({exam: obj}))
 })
