@@ -5,7 +5,7 @@ module.exports = {
     getDemoText: main
 };
 
-let demoTextPath = './demoText.txt'
+let demoTextPath = '/demoText.txt'
 
 const readFileAsync = util.promisify(fs.readFile)
 
