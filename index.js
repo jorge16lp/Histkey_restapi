@@ -11,12 +11,7 @@ const db = require('./db/db_methods.js')
 const app = express()
 const port = process.env.PORT || 3001
 
-app.use(cors({
-    origin: 'http://localhost:3000/Histkey_webapp',
-    methods: 'GET, POST, DELETE',
-    allowedHeaders: true,
-    header: 'Content-Type'
-}));
+app.use(cors());
 // app.use((req, res, next) => {
 //     res.header('Access-Control-Allow-Origin', '*')
 //     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
