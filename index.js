@@ -38,6 +38,7 @@ app.use(bodyParser.json())
 // TEXT
 // obtener el texto de prueba
 app.get('/read-demo-file/', (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*')
     demoTextLoader.getDemoText().then(obj => res.send({
         demoText: obj
     }))
