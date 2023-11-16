@@ -11,16 +11,18 @@ const db = require('./db/db_methods.js')
 const app = express()
 const port = process.env.PORT || 3001
 
-// app.use(cors({
-//     origin: 'http://localhost:3000/Histkey_webapp',
-//     // origin: 'https://jorge16lp.github.io/Histkey_webapp/'
-// }));
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*')
-    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
-    res.header('Access-Control-Allow-Headers', 'Content-Type')
-    next()
-})
+app.use(cors({
+    origin: 'http://localhost:3000/Histkey_webapp',
+    methods: 'GET, POST, DELETE',
+    allowedHeaders: true,
+    header: 'Content-Type'
+}));
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*')
+//     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE')
+//     res.header('Access-Control-Allow-Headers', 'Content-Type')
+//     next()
+// })
 
 app.listen(port, () => {
     console.log(`API REST corriendo en http://localhost:${port}`)
