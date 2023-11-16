@@ -12,7 +12,10 @@ module.exports = {
     findStudentByEmail: findStudentByEmail,
     addUser: addUser,
     addExam: addExam,
-    findExamByPublicId: findExamByPublicId
+    findExamByPublicId: findExamByPublicId,
+    deleteStudentByEmail: deleteStudentByEmail,
+    deleteTeacherByEmail: deleteTeacherByEmail,
+    deleteExamByPublicId: deleteExamByPublicId
 };
 
 async function addUser(type, theName, theSurname, theEmail, pass) {
@@ -46,6 +49,32 @@ async function addUser(type, theName, theSurname, theEmail, pass) {
     }
 }
 
+async function deleteStudentByEmail(emailToDelete) {
+    try {
+        connection()
+        const result = await StudentModel.deleteOne({ email: emailToDelete })
+        // console.log(result)
+        if (result.deletedCount === 0)
+            return null
+        return true
+    } catch (err) {
+        console.error(err)
+    }
+}
+
+async function deleteTeacherByEmail(emailToDelete) {
+    try {
+        connection()
+        const result = await TeacherModel.deleteOne({ email: emailToDelete })
+        // console.log(result)
+        if (result.deletedCount === 0)
+            return null
+        return true
+    } catch (err) {
+        console.error(err)
+    }
+}
+
 async function addExam(id, theQuestions) {
     try {
         connection()
@@ -54,7 +83,7 @@ async function addExam(id, theQuestions) {
             questions: theQuestions
         })
         var exam = await newExam.save()
-        console.log(exam)
+        // console.log(exam)
         return exam
     } catch (err) {
         if (err.code === 11000)
@@ -63,6 +92,19 @@ async function addExam(id, theQuestions) {
             console.error(err)
             return err
         }
+    }
+}
+
+async function deleteExamByPublicId(publicId) {
+    try {
+        connection()
+        const result = await ExamModel.deleteOne({ public_id: publicId })
+        // console.log(result)
+        if (result.deletedCount === 0)
+            return null
+        return true
+    } catch (err) {
+        console.error(err)
     }
 }
 
@@ -80,21 +122,15 @@ async function getAllTeachers() {
 async function findUserByEmail(email, pass) {
     try {
         connection()
-        var finded = false
         const allTeachers = await TeacherModel.find()
         for (var t in allTeachers)
-            if (allTeachers[t].email === email && allTeachers[t].password === pass) {
-                finded = true
+            if (allTeachers[t].email === email && allTeachers[t].password === pass)
                 return allTeachers[t]
-            }
         const allStudents = await StudentModel.find()
         for (var s in allStudents)
-            if (allStudents[s].email === email && allStudents[s].password === pass) {
-                finded = true
+            if (allStudents[s].email === email && allStudents[s].password === pass)
                 return allStudents[s]
-            }
-        if (!finded)
-            return null
+        return null
     } catch (err) {
         console.error(err)
     }
@@ -103,15 +139,11 @@ async function findUserByEmail(email, pass) {
 async function findTeacherByEmail(email, pass) {
     try {
         connection()
-        var finded = false
         const allTeachers = await TeacherModel.find()
         for (var t in allTeachers)
-            if (allTeachers[t].email === email && allTeachers[t].password === pass) {
-                finded = true
+            if (allTeachers[t].email === email && allTeachers[t].password === pass)
                 return allTeachers[t]
-            }
-        if (!finded)
-            return null
+        return null
     } catch (err) {
         console.error(err)
     }
@@ -120,15 +152,11 @@ async function findTeacherByEmail(email, pass) {
 async function findExamByPublicId(pId) {
     try {
         connection()
-        var finded = false
         const allExams = await ExamModel.find()
         for (var e in allExams)
-            if (allExams[e].public_id === pId) {
-                finded = true
+            if (allExams[e].public_id === pId)
                 return allExams[e]
-            }
-        if (!finded)
-            return null
+        return null
     } catch (err) {
         console.error(err)
     }
@@ -137,15 +165,11 @@ async function findExamByPublicId(pId) {
 async function findStudentByEmail(email, pass) {
     try {
         connection()
-        var finded = false
         const allStudents = await StudentModel.find()
         for (var s in allStudents)
-            if (allStudents[s].email === email && allStudents[s].password === pass) {
-                finded = true
+            if (allStudents[s].email === email && allStudents[s].password === pass)
                 return allStudents[s]
-            }
-        if (!finded)
-            return null
+        return null
     } catch (err) {
         console.error(err)
     }

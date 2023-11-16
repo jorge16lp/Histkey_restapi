@@ -21,7 +21,7 @@ async function main(text, keywords, repetitions) {
     var final = []
 
     final = generateQuestions()
-    console.log(final)
+    // console.log(final)
     return final
 }
 
@@ -115,7 +115,7 @@ function getOptionsWithPOS(w) {
         }
     });
 
-    console.log(taggedWord[0][0], taggedWord[0][1])
+    // console.log(taggedWord[0][0], taggedWord[0][1])
     for (var i in taggedWords) {
         if (!stopWords.includes(taggedWords[i][0].toLowerCase()) && taggedWords[i][0][0] === taggedWords[i][0][0].toUpperCase()) {
             if (taggedWords[i][1] === 'NNP')
@@ -164,7 +164,7 @@ function getOptionsWithPOS(w) {
                     arrayOptions.push(NNSlist[randomNumber][0])
             }
     } else {
-        console.log(taggedWord[0][0], taggedWord[0][1])
+        // console.log(taggedWord[0][0], taggedWord[0][1])
     }
 
     var randomArrayOptions = []

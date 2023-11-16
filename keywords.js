@@ -1,9 +1,9 @@
 const util = require('util')
-const fs = require('fs');
+const fs = require('fs')
 
 module.exports = {
     getKeyWords: main
-};
+}
 
 const readFileAsync = util.promisify(fs.readFile)
 
@@ -77,13 +77,13 @@ async function POS() {
     // coger sólamente words de estos tipos 
     var onlyFromText = [
         "NNP", "NNPS", "NN", "NNS"
-    ];
+    ]
 
     var paragraphSimple = "";
     for (i in taggedWords) {
-        var taggedWord = taggedWords[i];
-        var word = taggedWord[0];
-        var tag = taggedWord[1];
+        var taggedWord = taggedWords[i]
+        var word = taggedWord[0]
+        var tag = taggedWord[1]
 
         // cogiendo solo palabras en mayusculas y de los tipos indicados
         if (word[0] == word[0].toUpperCase() && onlyFromText.includes(tag) || word == 'I')
@@ -165,10 +165,10 @@ function tf_idf() {
     // }
     // fs.closeSync(file); // cerrar fichero
 
-    for (var w in finalWords)
-        console.log(finalWords[w])
+    // for (var w in finalWords)
+    //     console.log(finalWords[w])
 
-    console.log("Nº Palabras: " + finalWords.length)
+    // console.log("Nº Palabras: " + finalWords.length)
 
     return finalWords.sort();
 }

@@ -26,6 +26,12 @@ app.use(bodyParser.urlencoded({
 
 app.use(bodyParser.json())
 
+// TEXT
+// obtener el texto de prueba
+app.get('/read-demo-file/', (req, res) => {
+    demoTextLoader.getDemoText().then(obj => res.send({demoText: obj}))
+})
+
 // KEYWORDS
 // obtener las keywords a partir del texto
 app.post('/keywords/', (req, res) => {
@@ -36,12 +42,6 @@ app.post('/keywords/', (req, res) => {
 // obtener las preguntas a partir del texto, las keywords y sus repeticiones
 app.post('/questions/', (req, res) => {
     questions.getQuestions(req.body.theText, req.body.keywords, req.body.repetitions).then(obj => res.send({questions: obj}))
-})
-
-// TEXT
-// obtener el texto de prueba
-app.get('/read-demo-file/', (req, res) => {
-    demoTextLoader.getDemoText().then(obj => res.send({demoText: obj}))
 })
 
 // USERS
@@ -64,10 +64,28 @@ app.post('/user/', (req, res) => {
     db.addUser(req.body.type, req.body.name, req.body.surname, req.body.email, req.body.pass).then(obj => res.send({user: obj}))
 })
 
+// eliminar profesor por email (para testing)
+app.delete('/teacher/:email', (req, res) => {
+    const email = req.params.email
+    db.deleteTeacherByEmail(email).then(obj => res.send({user: obj}))
+})
+
+// eliminar estudiante por email (para testing)
+app.delete('/student/:email', (req, res) => {
+    const email = req.params.email
+    db.deleteStudentByEmail(email).then(obj => res.send({user: obj}))
+})
+
 // EXAMS
 // añadir examen
 app.post('/exam/', (req, res) => {
     db.addExam(req.body.public_id, req.body.questions).then(obj => res.send({exam: obj}))
+})
+
+// eliminar examen (para testing)
+app.delete('/exam/:id', (req, res) => {
+    const public_id = req.params.id
+    db.deleteExamByPublicId(public_id).then(obj => res.send({exam: obj}))
 })
 
 // obtener examen por id pública
@@ -76,3 +94,5 @@ app.get('/exam/:id', (req, res) => {
     // console.log(public_id)
     db.findExamByPublicId(public_id).then(obj => res.send({exam: obj}))
 })
+
+module.exports = app

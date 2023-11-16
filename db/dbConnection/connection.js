@@ -9,7 +9,7 @@ const uri = `mongodb+srv://jorlp:${password}@cluster0.awsvfpe.mongodb.net/${dbna
 module.exports = async () => {
     try {
         await mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true})
-        console.log('######################### SUCCESSFUL CONNECTION TO DB #########################')
+        // console.log('######################### SUCCESSFUL CONNECTION TO DB #########################')
     } catch (err) {
         console.error(err)
     }
